@@ -1,0 +1,79 @@
+### Define input stream
+###  Topic must pre-exists
+
+
+CREATE STREAM pageviews (status INTEGER, url STRING, user STRING) WITH (KAFKA_TOPIC='pageviews', VALUE_FORMAT='JSON');
+
+SELECT * FROM pageviews;
+
+SELECT status, user, 'staging_' || url FROM pageviews
+	WHERE status = 200;
+
+
+### Filter + output to a result topic 'pageview_errors'
+###  Creates query that is running in KSQL server until terminated
+
+
+CREATE STREAM pageview_errors
+    WITH (KAFKA_TOPIC = 'pageview_errors', VALUE_FORMAT='JSON')
+    AS
+        SELECT url, status, user
+            FROM pageviews
+            WHERE status <> 200
+            PARTITION BY url;
+
+SELECT url, status, user FROM pageview_errors;
+
+SHOW STREAMS;
+SHOW QUERIES;
+
+# For this to work, check the actual query ID from the output of SHOW QUERIES
+EXPLAIN CSAS_PAGEVIEW_ERRORS_23;
+
+
+### Repartition:
+
+CREATE STREAM pageviews_by_user
+    AS
+        SELECT user, url, status
+        FROM pageviews
+        PARTITION BY user;
+
+DESCRIBE pageviews_by_user;
+DESCRIBE EXTENDED pageviews;
+DESCRIBE EXTENDED pageviews_by_user;
+
+
+### Aggregation:
+
+CREATE TABLE pageviews_per_user
+    WITH (KAFKA_TOPIC = 'pageviews_per_user', VALUE_FORMAT='JSON')
+    AS
+        SELECT user, count(*) as count
+            FROM pageviews_by_user
+            GROUP BY user;
+
+SELECT * FROM pageviews_per_user;
+
+
+### Windowed aggregation:
+
+CREATE TABLE pageviews_per_minute
+    WITH (KAFKA_TOPIC = 'pageviews_per_minute', VALUE_FORMAT='JSON')
+    AS
+        SELECT url, count(*)
+            FROM pageviews
+            WINDOW TUMBLING (SIZE 1 MINUTE)
+            GROUP BY url;
+
+SELECT * FORM pageviews_per_minute;
+
+### Joins (stream / table)
+
+CREATE STREAM pageviews_with_user_stats
+    AS
+        SELECT p.url, ppu.count
+            FROM pageviews_by_user p
+            LEFT JOIN pageviews_per_user ppu ON p.user = ppu.user;
+
+SELECT * FROM pageviews_with_user_stats;
