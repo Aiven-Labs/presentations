@@ -1,0 +1,14 @@
+consumerKey: 
+consumerSecret:
+accessToken: 
+accessSecret: 
+kafkaURI: 
+kafkaPEMPath: 
+kafkaKeyPath: 
+kafkaCertPath: 
+kafkaTopic: tweet-queue
+verbose: true
+terms:
+  - brexit
+  - covid
+  - trump
