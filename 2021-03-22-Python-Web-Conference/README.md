@@ -25,7 +25,7 @@ With Kakfa in place, many things are possible so this session also introduces Ka
     * Working hours start!
     * Pizza is ready!
   * Basic setup:
-    * one person who replies to calls and make pizzas - not enough
+    * one person who replies to calls and make pizzas - not enough - monolith
     * add person who replies to calls, pizza maker, distributor
     * sync calls, show waiting time, service unavailable
     * add person that does receipts, same message goes to two people
