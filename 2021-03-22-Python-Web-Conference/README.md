@@ -18,21 +18,94 @@ With Kakfa in place, many things are possible so this session also introduces Ka
 
 ## Talk Structure
 
-* What is Kafka
-  * distributed Pub/Sub
-  * Avoid Spaghetti
-  * Multiple producers/consumers
+* What is Kafka - Working with the pizzeria analogy
+  * What is an event?
+    * Receiving an Order on the phone
+    * New material arrives
+    * Working hours start!
+    * Pizza is ready!
+  * Basic setup:
+    * one person who replies to calls and make pizzas - not enough
+    * add person who replies to calls, pizza maker, distributor
+    * sync calls, show waiting time, service unavailable
+    * add person that does receipts, same message goes to two people
+    * add person who does inventary, same message goes to 3 people
+  * A distributed log - Topic idea
+    * Multiple producers/consumers   
+      * Avoid Spaghetti
+  * Replay events
+  * Add more people to reply to the phone and to distribute pizzas
+    * Partitioning - increase producer/consumer pool
   * Microservices
+    * They first talk directly to each other
+      * What if something fails?
+      * What if it's busy
+      * Burden is in the producer/consumer app   
+    * Evolve schemas   
+  * Kafka enables Decoupling Producer/Consumers
+    * Producer can send and do other work
+    * consumer can wait and execute
 
-* How do I work with Kafka
+* How do I work with Kafka and Python
+  * Administration
+    * Create a topic
+    * Create partitions
   * Sample writer
+    * parameters
+    * topic registration (if not done above)
+    * partition subscription
   * Sample reader
-  * Fake pizza data
-  * Faust - Kafka streams in Python example
+    * parameters
+    * timeout
+    * partition assignment
+  * Brief Fake data
+  * Faust - Kafka streams in Python example --> Too Much?
+  * Kafkacat to read
 
 * Kafka Connect
+  * What is?
+    * pre-built connectors, show list
+  * Sources and Sinks
+  * Use cases
+  * Demo with pg
 
 ## references
 
 * [Blog Post](https://github.com/aiven/blog-posts/tree/ft_python_fake_producer/2021/01/python_fake_producer)
 * [Code](https://github.com/aiven/kafka-python-fake-data-producer)
+
+
+## Demo
+
+```
+FOLDER_NAME=~/kafkacerts
+PROJECT_NAME=dev-advocates
+CLOUD=aws-eu-south-1
+KAFKA_NAME=fafka-ft
+POSTGRES_NAME=pg-ft
+
+avn service create -p business-4 -t kafka $KAFKA_NAME --cloud $CLOUD --project $PROJECT_NAME -c kafka_rest=true -c kafka.auto_create_topics_enable=true -c schema_registry=true -c kafka_connect=true
+
+# Download all certificates
+mkdir $FOLDER_NAME
+avn service user-creds-download $KAFKA_NAME --project $PROJECT_NAME -d $FOLDER_NAME --username avnadmin
+
+# get KAFKA URL
+avn service get $KAFKA_NAME --project=$PROJECT_NAME --format '{service_uri}'
+
+# Do Python Magic
+...
+
+python FakerKafka.py --cert-folder ~/kafkacerts --host fafka-ft-dev-advocates.aivencloud.com --port 13041 --topic-name pizza-orders --nr-messages 0 --max-waiting-time 0
+
+
+# create postgreSQL
+avn service create -p startup-4 -t pg $POSTGRES_NAME --cloud $CLOUD --project $PROJECT_NAME
+
+# create connector
+
+
+# terminate
+avn service terminate $KAFKA_NAME --project $PROJECT_NAME --force
+avn service terminate $POSTGRES_NAME --project $PROJECT_NAME --force
+```
