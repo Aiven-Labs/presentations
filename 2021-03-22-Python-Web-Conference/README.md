@@ -29,7 +29,7 @@ With Kakfa in place, many things are possible so this session also introduces Ka
     * add person who replies to calls, pizza maker, distributor
     * sync calls, show waiting time, service unavailable
     * add person that does receipts, same message goes to two people
-    * add person who does inventary, same message goes to 3 people
+    * add person who does inventory, same message goes to 3 people
   * A distributed log - Topic idea
     * Multiple producers/consumers   
       * Avoid Spaghetti
