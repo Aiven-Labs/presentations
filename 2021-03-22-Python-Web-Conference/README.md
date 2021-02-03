@@ -14,7 +14,7 @@ Code and data go together like tomato and basil; not many applications work with
 
 We will look at the types of problems that Kafka is best at solving, and show how to use it in your own applications. Whether you have a new application or are looking to upgrade an existing one, this session includes advice on adding Kafka using the Python libraries and includes code examples (with bonus discussion of pizza toppings) to use.
 
-With Kakfa in place, many things are possible so this session also introduces Kafka Connect, a selection of pre-built connectors that you can use to route events between systems and integrate with other tools. This session is recommended for engineers and architects whose applications are ready for next-level data abilities.
+With Kafka in place, many things are possible so this session also introduces Kafka Connect, a selection of pre-built connectors that you can use to route events between systems and integrate with other tools. This session is recommended for engineers and architects whose applications are ready for next-level data abilities.
 
 ## Talk Structure
 
@@ -60,7 +60,7 @@ With Kakfa in place, many things are possible so this session also introduces Ka
     * partition assignment
   * Brief Fake data
   * Faust - Kafka streams in Python example --> Too Much?
-  * Kafkacat to read
+  * Kafkacat to read? Optional only mention
 
 * Kafka Connect
   * What is?
