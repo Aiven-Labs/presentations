@@ -83,8 +83,9 @@ PROJECT_NAME=dev-advocates
 CLOUD=aws-eu-south-1
 KAFKA_NAME=fafka-ft
 POSTGRES_NAME=pg-ft
+AIVEN_PLAN_NAME=business-4
 
-avn service create -p business-4 -t kafka $KAFKA_NAME --cloud $CLOUD --project $PROJECT_NAME -c kafka_rest=true -c kafka.auto_create_topics_enable=true -c schema_registry=true -c kafka_connect=true
+avn service create -p $AIVEN_PLAN_NAME -t kafka $KAFKA_NAME --cloud $CLOUD --project $PROJECT_NAME -c kafka_rest=true -c kafka.auto_create_topics_enable=true -c schema_registry=true -c kafka_connect=true
 
 # Download all certificates
 mkdir $FOLDER_NAME
