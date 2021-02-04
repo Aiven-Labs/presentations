@@ -40,11 +40,12 @@ With Kafka in place, many things are possible so this session also introduces Ka
     * They first talk directly to each other
       * What if something fails?
       * What if it's busy
-      * Burden is in the producer/consumer app   
-    * Evolve schemas   
+      * Burden is in the producer/consumer     
   * Kafka enables Decoupling Producer/Consumers
     * Producer can send and do other work
     * consumer can wait and execute
+    * more consumers can read the same data
+    * a consumer pool can divide the work
 
 * How do I work with Kafka and Python
   * Administration
