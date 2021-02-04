@@ -88,6 +88,8 @@ AIVEN_PLAN_NAME=business-4
 
 avn service create -p $AIVEN_PLAN_NAME -t kafka $KAFKA_NAME --cloud $CLOUD --project $PROJECT_NAME -c kafka_rest=true -c kafka.auto_create_topics_enable=true -c schema_registry=true -c kafka_connect=true
 
+avn service wait $KAFKA_SERVICE_NAME --project $PROJECT_NAME
+
 # Download all certificates
 mkdir $FOLDER_NAME
 avn service user-creds-download $KAFKA_NAME --project $PROJECT_NAME -d $FOLDER_NAME --username avnadmin
