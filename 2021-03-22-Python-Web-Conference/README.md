@@ -18,14 +18,21 @@ With Kafka in place, many things are possible so this session also introduces Ka
 
 ## Talk Structure
 
-* What is Kafka - Working with the pizzeria analogy - can be done with a generic analogy
+* Problems Kafka solves:
+  * Existing app or new
+  * Communication between components
+  * communications between apps
+  * aging application
+  * all different integrations
+
+* What is Kafka - generic order producer analogy (or with the pizzeria analogy) - Pizza app analogy
   * What is an event?
     * Receiving an Order on the phone
     * New material arrives
     * Working hours start!
     * Pizza is ready!
   * Basic setup:
-    * one person who replies to calls and make pizzas - not enough - monolith
+    * one person who replies to calls and make pizzas - can grow (think experience) not enough - monolith
     * add person who replies to calls, pizza maker, distributor
     * sync calls, show waiting time, service unavailable
     * add person that does receipts, same message goes to two people
@@ -33,7 +40,7 @@ With Kafka in place, many things are possible so this session also introduces Ka
   * A distributed log - Topic idea
     * Multiple producers/consumers   
       * Avoid Spaghetti
-  * Replay events
+      * Producer can't evolve since it has to talk with ABC
   * Add more people to reply to the phone and to distribute pizzas
     * Partitioning - increase producer/consumer pool
   * Microservices
@@ -46,13 +53,13 @@ With Kafka in place, many things are possible so this session also introduces Ka
     * consumer can wait and execute
     * more consumers can read the same data
     * a consumer pool can divide the work
+    * distributed, fault tolerant
+  * Kafka streams
+    * reshape, join data
 
 * How do I work with Kafka and Python
-  * Administration
-    * Create a topic
-    * Create partitions
-    * list offsets
   * Sample producer
+    * Show data -> then show code
     * parameters
     * topic registration (if not done above)
     * partition subscription
@@ -64,17 +71,26 @@ With Kafka in place, many things are possible so this session also introduces Ka
     * consumer group
     * offset
     * highwater
+
+  * Administration - maybe we can skip saying that we create topic or auto.generate.topics
+    * Create/Manage a topic
+    * Create/Manage partitions
+    * list topics/partitions/offsets
+
   * Brief Fake data
-  * Faust - Kafka streams in Python example --> Too Much?
-    * transform your data in Python
   * Kafkacat to read? Optional only mention
 
-* Kafka Connect
+* Kafka Connect - existing applications talk with database
   * What is?
     * pre-built connectors, show list
   * Sources and Sinks
   * Use cases
   * Demo with pg
+
+* Trials
+* Demo App
+* Bar
+
 
 ## references
 
@@ -102,6 +118,9 @@ avn service user-creds-download $KAFKA_NAME --project $PROJECT_NAME -d $FOLDER_N
 
 # get KAFKA URL
 avn service get $KAFKA_NAME --project=$PROJECT_NAME --format '{service_uri}'
+
+# get password?
+
 
 # Do Python Magic
 ...
