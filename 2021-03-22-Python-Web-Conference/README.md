@@ -18,7 +18,7 @@ With Kafka in place, many things are possible so this session also introduces Ka
 
 ## Talk Structure
 
-* What is Kafka - Working with the pizzeria analogy
+* What is Kafka - Working with the pizzeria analogy - can be done with a generic analogy
   * What is an event?
     * Receiving an Order on the phone
     * New material arrives
@@ -51,16 +51,22 @@ With Kafka in place, many things are possible so this session also introduces Ka
   * Administration
     * Create a topic
     * Create partitions
-  * Sample writer
+    * list offsets
+  * Sample producer
     * parameters
     * topic registration (if not done above)
     * partition subscription
-  * Sample reader
+    * acknowledgment
+  * Sample consumer
     * parameters
     * timeout
     * partition assignment
+    * consumer group
+    * offset
+    * highwater
   * Brief Fake data
   * Faust - Kafka streams in Python example --> Too Much?
+    * transform your data in Python
   * Kafkacat to read? Optional only mention
 
 * Kafka Connect
@@ -82,7 +88,7 @@ With Kafka in place, many things are possible so this session also introduces Ka
 FOLDER_NAME=~/kafkacerts
 PROJECT_NAME=dev-advocates
 CLOUD=aws-eu-south-1
-KAFKA_NAME=fafka-ft
+KAFKA_NAME=kafka-ft
 POSTGRES_NAME=pg-ft
 AIVEN_PLAN_NAME=business-4
 
